@@ -20,6 +20,8 @@ return new class extends Migration
             $table->unsignedTinyInteger('is_pinned');
             $table->string('date');
             $table->string('category');
+            $table->string('article_id');
+            $table->string('source')->default('the_guardian');
 
             $table->timestamps();
         });

@@ -26,6 +26,7 @@ class PinCreateRequest extends FormRequest
             'category'  => 'required',
             'url'       => 'required',
             'date'       => 'required',
+            'article_id' => 'required',
             'body'      => 'sometimes'
         ];
     }

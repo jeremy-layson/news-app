@@ -25,11 +25,11 @@ class PinController extends Controller
     {
         $data = $request->validated();
         $data['is_pinned'] = 1;
+        $data['source'] = 'the_guardian';
 
         $pin = Pin::firstOrCreate([
             // to avoid duplication
-            'category' => $data['category'],
-            'url'      => $data['url'],
+            'article_id' => $data['article_id'],
         ],$data);
         
         return response($this->fetchPins());

@@ -15,11 +15,39 @@ abstract class Article implements Arrayable
 
   protected $date;
 
-  protected $isPinned = FALSE;
+  protected $isPinned = 0;
 
   protected $url;
 
   protected $category = '';
+
+  protected $source = '';
+
+  protected $articleId = '';
+
+  public function getArticleId(): string
+  {
+    return $this->articleId;
+  }
+
+  public function setArticleId(string $articleId): Article
+  {
+    $this->articleId = $articleId;
+
+    return $this;
+  }
+
+  public function getSource(): string
+  {
+    return $this->source;
+  }
+
+  public function setSource(string $source): Article
+  {
+    $this->source = $source;
+
+    return $this;
+  }
 
   public function setCategory(string $category): Article
   {
@@ -88,14 +116,14 @@ abstract class Article implements Arrayable
     return $this;
   }
 
-  public function getIsPinned(): string
+  public function getIsPinned(): Int
   {
     // check DB if article exist as pinned
     $pin = Pin::where('url', $this->getUrl())
       ->where('category', $this->getCategory())
       ->first();
 
-    return (int)(is_null($pin) ? $this->isPinned : $pin->is_pinned);
+    return intval(is_null($pin) ? $this->isPinned : $pin->is_pinned);
   }
 
   public function __toString()
@@ -105,8 +133,10 @@ abstract class Article implements Arrayable
       'body'  => $this->getBody(),
       'date'  => $this->getDate(),
       'is_pinned' => $this->getIsPinned(),
-      'url'   => $this->getUrl(),
-      'category'   => $this->getCategory(),
+      'url'       => $this->getUrl(),
+      'category'    => $this->getCategory(),
+      'article_id'  => $this->getArticleId(),
+      'source'      => $this->getSource(),
     ]);
   }
 
@@ -117,8 +147,10 @@ abstract class Article implements Arrayable
       'body'  => $this->getBody(),
       'date'  => $this->getDate(),
       'is_pinned' => $this->getIsPinned(),
-      'url'   => $this->getUrl(),
-      'category'   => $this->getCategory(),
+      'url'       => $this->getUrl(),
+      'category'    => $this->getCategory(),
+      'article_id'  => $this->getArticleId(),
+      'source'      => $this->getSource(),
     ];
   }
 }

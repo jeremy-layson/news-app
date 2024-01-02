@@ -40,11 +40,13 @@ class GuardianFetcher extends NewsFetcher
     foreach ($articles as $key => $article) {
       $object = new GuardianArticle;
 
-      $object->setTitle($article['webTitle']);
-      $object->setBody('');
-      $object->setUrl($article['webUrl']);
-      $object->setDate($article['webPublicationDate']);
-      $object->setCategory($article['sectionName']);
+      $object->setTitle($article['webTitle'])
+        ->setBody('')
+        ->setUrl($article['webUrl'])
+        ->setDate($article['webPublicationDate'])
+        ->setCategory($article['sectionName'])
+        ->setSource('the_guardian')
+        ->setArticleId($article['id']);
 
       $results[] = $object->toArray();
     }
@@ -58,6 +60,18 @@ class GuardianFetcher extends NewsFetcher
    */
   protected function sortResult(Collection $result): Collection
   {
-    return $result->sortBy(['category', 'asc']);
+    return $this->groupResult($result->sortBy(['category', 'asc']));
+  }
+
+  // per requirements, it must be grouped
+  protected function groupResult(Collection $result): Collection
+  {
+    $groups = [];
+
+    foreach ($result as $key => $item) {
+      $groups[$item['category']][] = $item;
+    }
+
+    return collect($groups);
   }
 }

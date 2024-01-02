@@ -16,5 +16,7 @@ class Pin extends Model
         'is_pinned',
         'date',
         'url',
+        'source',
+        'article_id',
     ];
 }

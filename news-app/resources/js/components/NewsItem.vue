@@ -30,7 +30,7 @@ export default {
             required: false,
         },
         is_pinned: {
-            type: Boolean,
+            type: Number,
             required: true,
         },
         date: {
@@ -42,15 +42,19 @@ export default {
             required: true,
         },
         category: {
-          type: String,
-          required: true,
+            type: String,
+            required: true,
+        },
+        article_id: {
+            type: String,
+            required: true,
         },
     },
     data() {
         return {};
     },
     mounted() {
-      console.log(this.is_pinned)
+
     },
     methods: {
       async pin() {
@@ -60,6 +64,7 @@ export default {
           date: this.date,
           url: this.url,
           category: this.category,
+          article_id: this.article_id,
         })
         .then(() => {
           this.$emit('clicked')
